@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "react": "^16.2.0",
+    "react-audio-player": "^0.17.0",
     "react-dom": "^16.2.0",
     "react-scripts": "^1.1.5",
-    "react-youtube": "^7.5.0"
+    "react-youtube": "^7.5.0",
+    "use-sound": "^4.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import YouTube from 'react-youtube';
 import './App.css';
 
 import MovingGibbix from './MovingGibbix';
@@ -7,6 +6,8 @@ import GibbixJump from './GibbixJump';
 
 import top from './img/top_edit.jpg';
 import infra from './img/infra.jpg';
+import audio from './audio/kekw.ogg';
+import ReactAudioPlayer from 'react-audio-player';
 
 class App extends Component {
   constructor(props) {
@@ -18,6 +19,7 @@ class App extends Component {
       infraX: 0,
       infraStatus: true
     };
+    console.log("KEKW")
 
     this.move = this.move.bind(this);
   }
@@ -76,24 +78,11 @@ class App extends Component {
             zIndex: 10
           }} src={infra} alt="infrasturcture" ref={elem => { this.infra = elem; }} />
           <div className="hidden-player">
-            <YouTube
-              videoId="Eh3nSx9V89s"
-              id="Eh3nSx9V89s"
-              className="hidden-player-yt"
-              onReady={e => {
-                e.target.setVolume(100);
-                this.onPlay();
-              }}
-              onEnd={e => {
-                e.target.seekTo(0);
-                this.onPlay();
-              }}
-              opts={{
-                playerVars: {
-                  autoplay: 1
-                }
-              }}
-            />
+           <ReactAudioPlayer
+            src={audio}
+            autoPlay
+            loop
+           />
           </div>
         </div>
         {this.state.showJump && <GibbixJump />}
