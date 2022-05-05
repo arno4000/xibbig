@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  overflow: hidden;
+}
+
+.full-bg {
+  height: 100vh;
+  width: 100vw;
+  background-color: black;
+  background-size: cover;
+}
+
+.gibbix-jumpscare {
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  background-size: cover;
+}
+
+.hidden-player {
+  /* display: none; */
+  z-index: 20;
+}
