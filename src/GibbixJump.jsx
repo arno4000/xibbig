@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import gibbixHd from './img/gibbix_hd.jpg';
 import explosion from './img/explosion.gif';
 
-class GibbixJump extends React.Component {
+class GibbixJump extends Component {
   componentDidMount() {
     const newImage = () => {
       const animation = new Image();

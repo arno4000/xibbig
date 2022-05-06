@@ -18,24 +18,26 @@ class App extends Component {
       gibbixes: [],
       showJump: false,
       infraX: 0,
-      infraStatus: true
+      infraDX: 5
     };
     console.log("KEKW")
 
+    //event handling
     this.move = this.move.bind(this);
   }
 
-  move() {
+  move () {
+
     if (this.state.infraX > document.documentElement.offsetWidth - this.infra.clientWidth) {
-      this.setState({ infraStatus: false });
+      this.setState({infraDX: - 5});
     }
-    if (this.state.infraX <= 0) {
-      this.setState({ infraStatus: true });
+    if (this.state.infraX < -1) {
+      this.setState({infraDX: 5});
     }
 
-    this.setState({
-      infraX: this.state.infraStatus ? this.state.infraX + 5 : this.state.infraX - 5
-    })
+    this.setState(prev => ({
+      infraX: prev.infraX + this.state.infraDX
+    }));
   }
 
   componentDidMount() {
@@ -48,7 +50,7 @@ class App extends Component {
       });
     }, 1000);
 
-    setInterval(this.move, 1);
+    setInterval(this.move, 500);
   }
 
   onPlay() {
@@ -61,6 +63,7 @@ class App extends Component {
     }, 56000);
     //}, 2000);
   }
+
   playAudio(){
     new Audio(audio).play();
   }
@@ -77,6 +80,7 @@ class App extends Component {
           
         >
           {this.state.gibbixes}
+          
           <img style={{
             position: 'absolute',
             left: this.state.infraX,

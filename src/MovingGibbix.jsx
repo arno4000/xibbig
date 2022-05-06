@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import smartlearnAlpha from './img/smartlearn_alpha.png';
 
-class MovingGibbix extends React.Component {
+class MovingGibbix extends Component {
   performGibbixMove() {
 
     const getRandom = max => {
