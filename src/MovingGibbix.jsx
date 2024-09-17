@@ -1,47 +1,57 @@
 import React from 'react';
-
 import smartlearnAlpha from './img/smartlearn_alpha.png';
 
 class MovingGibbix extends React.Component {
-  performGibbixMove() {
-
-    const getRandom = max => {
-      return Math.floor(Math.random() * max) - max / 2;
+  constructor(props) {
+    super(props);
+    this.state = {
+      infraX: Math.floor(window.innerWidth / 2) - 300,
+      infraStatus: true,
     };
+    this.gibbixRef = React.createRef();
+    this.performGibbixMove = this.performGibbixMove.bind(this);
+  }
 
-    this.leftSpeed = this.leftSpeed + getRandom(100);
-    this.topSpeed = this.topSpeed + getRandom(100);
+  getRandom = max => Math.floor(Math.random() * max) - max / 2;
 
-    this.gibbix.style.top = this.gibbix.offsetTop + getRandom(50) + 'px';
-    this.gibbix.style.left = this.gibbix.offsetLeft + getRandom(50) + 'px';
-
-    this.rotation = this.rotation + getRandom(50);
-    this.width = this.width + getRandom(50);
-
-    if (this.width < 50) {
-      this.width = this.width = 50;
+  performGibbixMove() {
+    if (this.state.infraX > document.documentElement.offsetWidth - this.gibbixRef.current.clientWidth) {
+      this.setState({ infraStatus: false });
+    }
+    if (this.state.infraX <= 0) {
+      this.setState({ infraStatus: true });
     }
 
-    this.gibbix.style.transform = 'rotate(' + this.rotation + 'deg)';
-    this.gibbix.style.width = this.width + 'px';
+    this.setState(prevState => ({
+      infraX: prevState.infraStatus ? prevState.infraX + 5 : prevState.infraX - 5
+    }));
+
+    const topSpeed = this.getRandom(100);
+    const leftSpeed = this.getRandom(100);
+
+    this.gibbixRef.current.style.top = this.gibbixRef.current.offsetTop + this.getRandom(50) + 'px';
+    this.gibbixRef.current.style.left = this.state.infraX + 'px';
+
+    const rotation = this.getRandom(50);
+    let width = this.gibbixRef.current.clientWidth + this.getRandom(50);
+
+    if (width < 50) {
+      width = 50;
+    }
+
+    this.gibbixRef.current.style.transform = 'rotate(' + rotation + 'deg)';
+    this.gibbixRef.current.style.width = width + 'px';
   }
 
   componentDidMount() {
-    this.gibbix.style.top = Math.floor(window.innerHeight / 2) - 200 + 'px';
-    this.gibbix.style.left = Math.floor(window.innerWidth / 2) - 300 + 'px';
+    this.gibbixRef.current.style.top = Math.floor(window.innerHeight / 2) - 200 + 'px';
+    this.gibbixRef.current.style.left = this.state.infraX + 'px';
 
-    setInterval(this.performGibbixMove, 1);
+    this.interval = setInterval(this.performGibbixMove, 1);
   }
 
-  constructor(props) {
-    super(props);
-
-    this.performGibbixMove = this.performGibbixMove.bind(this);
-
-    this.leftSpeed = 0;
-    this.topSpeed = 0;
-    this.rotation = 0;
-    this.width = 600;
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
   render() {
@@ -53,9 +63,7 @@ class MovingGibbix extends React.Component {
           transition: 'all 0.1s',
           zIndex: 50
         }}
-        ref={gibbix => {
-          this.gibbix = gibbix;
-        }}
+        ref={this.gibbixRef}
         alt="GibbiX"
       />
     );
