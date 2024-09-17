@@ -58,7 +58,6 @@ class App extends Component {
         this.setState({ showJump: false });
       }, 2000);
     }, 4500); // Changed to 45 seconds
-    console.log('Jumping');
   }
 
   playAudio(){
